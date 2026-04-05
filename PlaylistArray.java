@@ -68,12 +68,27 @@ public class PlaylistArray {
     Lagu[] playlist = new Lagu[10];
     int jumlahLagu = 0;
 
-    public static void tekanEnter(Scanner input) {
+    int cariIndex(String judulLagu) {
+        for (int i = 0; i < jumlahLagu; i++) {
+            if (playlist[i].getJudul().equalsIgnoreCase(judulLagu)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static void tekanEnter(Scanner input, boolean flag) {
         System.out.println("\nTekan ENTER untuk kembali ke menu...");
         input.nextLine();
-        input.nextLine();
+        if (!flag) {
+            input.nextLine();
+        }
         System.out.println("Kembali...");
         delay(800);
+    }
+
+    public static void tekanEnter(Scanner input) {
+        tekanEnter(input, false);
     }
 
     public static void delay(int time) {
@@ -108,7 +123,7 @@ public class PlaylistArray {
             return;
         }
 
-        input.nextLine(); 
+        input.nextLine();
 
         System.out.print("Judul lagu : ");
         String judul = input.nextLine();
@@ -130,14 +145,43 @@ public class PlaylistArray {
         }
     }
 
-    void hapusLagu(Scanner input) {
+    void hapusLagu(String judulLagu) {
+        // 1. Cari index lagu terlebih dahulu
+        int index = cariIndex(judulLagu);
 
+        // 2. Jika tidak ditemukan, keluar
+        if (index == -1) {
+            return;
+        }
+
+        // 3. Tampilkan info lagu yang akan dihapus
+        System.out.println(" Menghapus: " + playlist[index].getJudul());
+
+        // 4. Geser semua elemen setelah index ke kiri (agar array rapat)
+        for (int i = index; i < jumlahLagu - 1; i++) {
+            playlist[i] = playlist[i + 1]; // Shift left
+        }
+
+        // 5. Set elemen terakhir menjadi null & kurangi counter
+        playlist[jumlahLagu - 1] = null;
+        jumlahLagu--;
+
+        System.out.println("Lagu berhasil dihapus! Total lagu: " + jumlahLagu);
+        System.out.println("---");
     }
 
-    
-
-    void cariLagu(Scanner input) {
-
+    void cariLagu(String judulLagu) {
+        // Linear search: cek satu per satu dari index 0
+        for (int i = 0; i < jumlahLagu; i++) {
+            // Case insensitive search (huruf besar/kecil diabaikan)
+            if (playlist[i].getJudul().equalsIgnoreCase(judulLagu)) {
+                System.out.println("Lagu ditemukan di posisi " + (i + 1));
+                playlist[i].tampilkanInfo();
+                return;
+            }
+        }
+        // Tidak ditemukan
+        System.out.println("Lagu '" + judulLagu + "' tidak ditemukan!");
     }
 
     void urutkanLaguBerdasarkanDurasi() {
@@ -164,8 +208,6 @@ public class PlaylistArray {
         System.out.println("\n=== Setelah Sorting (Ascending Durasi) ===");
         tampilkanSemuaLagu();
     }
-
-    
 
     public static void main(String[] args) {
 
@@ -219,13 +261,19 @@ public class PlaylistArray {
                     break;
 
                 case 3:
-                    // function hapus lagu berdasarkan judul
-                    tekanEnter(input);
+                    input.nextLine();
+                    System.out.print("Masukkan judul lagu yang ingin dihapus: ");
+                    String judulHapus = input.nextLine();
+                    p.hapusLagu(judulHapus);
+                    tekanEnter(input, true);
                     break;
 
                 case 4:
-                    // cari lagu berdasarkan judul
-                    tekanEnter(input);
+                    input.nextLine();
+                    System.out.print("Masukkan judul lagu yang dicari: ");
+                    String judulCari = input.nextLine();
+                    p.cariLagu(judulCari);
+                    tekanEnter(input, true);
                     break;
 
                 case 5:
