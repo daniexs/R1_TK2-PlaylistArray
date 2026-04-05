@@ -1,0 +1,8 @@
+# Hasil kompilasi Java
+*.class
+
+# Folder build umum (IDE / tool)
+bin/
+out/
+build/
+target/

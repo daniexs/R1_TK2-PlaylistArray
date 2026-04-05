@@ -85,16 +85,49 @@ public class PlaylistArray {
     }
 
     void tampilkanSemuaLagu() {
+        if (jumlahLagu == 0) {
+            System.out.println("Playlist masih kosong.");
+            return;
+        }
 
+        System.out.println("--- Daftar lagu (" + jumlahLagu + " lagu) ---");
+        for (int i = 0; i < jumlahLagu; i++) {
+            System.out.println("[" + (i + 1) + "]");
+            playlist[i].tampilkanInfo();
+            System.out.println();
+        }
     }
 
     void tambahLagu(Scanner input) {
+        if (jumlahLagu >= playlist.length) {
+            System.out.println("Playlist penuh (maksimal " + playlist.length + " lagu).");
+            return;
+        }
 
+        input.nextLine(); 
+
+        System.out.print("Judul lagu : ");
+        String judul = input.nextLine();
+        System.out.print("Nama artis : ");
+        String artis = input.nextLine();
+        System.out.print("Durasi (menit desimal, mis. 3.5 = 3 menit 30 dtk): ");
+        double durasi = input.nextDouble();
+
+        try {
+            Lagu baru = new Lagu(judul, artis, durasi);
+            playlist[jumlahLagu] = baru;
+            jumlahLagu++;
+            System.out.println("Lagu \"" + baru.getJudul() + "\" berhasil ditambahkan.");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Gagal menambah lagu: " + e.getMessage());
+        }
     }
 
     void hapusLagu(Scanner input) {
 
     }
+
+    
 
     void cariLagu(Scanner input) {
 
@@ -125,11 +158,12 @@ public class PlaylistArray {
         tampilkanSemuaLagu();
     }
 
+    
+
     public static void main(String[] args) {
 
         Scanner input = new Scanner(System.in);
         int pilihanUtama;
-        int lastIndex = 0;
         PlaylistArray p = new PlaylistArray();
 
         do {
@@ -147,6 +181,7 @@ public class PlaylistArray {
                     int menuSort;
                     do {
                         System.out.println("=== Daftar Semua Lagu ===");
+                        p.tampilkanSemuaLagu();
                         System.out.println("\n1. Sorting Berdasarkan Durasi");
                         System.out.println("2. Kembali");
                         System.out.print("Pilih menu: ");
@@ -172,7 +207,7 @@ public class PlaylistArray {
                     break;
 
                 case 2:
-                    // function tambah lagu
+                    p.tambahLagu(input);
                     tekanEnter(input);
                     break;
 
