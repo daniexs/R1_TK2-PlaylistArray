@@ -85,20 +85,24 @@ public class PlaylistArray {
     }
 
     void tampilkanSemuaLagu() {
+        // validasi playlist kosong
         if (jumlahLagu == 0) {
             System.out.println("Playlist masih kosong.");
             return;
         }
 
         System.out.println("--- Daftar lagu (" + jumlahLagu + " lagu) ---");
+        // tampilkan semua lagu
         for (int i = 0; i < jumlahLagu; i++) {
             System.out.println("[" + (i + 1) + "]");
+            // tampilkan informasi lagu
             playlist[i].tampilkanInfo();
             System.out.println();
         }
     }
 
     void tambahLagu(Scanner input) {
+        // validasi jumlah lagu
         if (jumlahLagu >= playlist.length) {
             System.out.println("Playlist penuh (maksimal " + playlist.length + " lagu).");
             return;
@@ -114,8 +118,11 @@ public class PlaylistArray {
         double durasi = input.nextDouble();
 
         try {
+            // buat objek lagu baru
             Lagu baru = new Lagu(judul, artis, durasi);
+            // tambahkan lagu ke playlist
             playlist[jumlahLagu] = baru;
+            // increment jumlah lagu
             jumlahLagu++;
             System.out.println("Lagu \"" + baru.getJudul() + "\" berhasil ditambahkan.");
         } catch (IllegalArgumentException e) {
