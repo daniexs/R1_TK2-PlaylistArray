@@ -221,38 +221,16 @@ public class PlaylistArray {
             System.out.println("2. Tambah lagu baru");
             System.out.println("3. Hapus lagu berdasarkan judul");
             System.out.println("4. Cari lagu berdasarkan judul");
-            System.out.println("5. Keluar");
+            System.out.println("5. Urutkan berdasarkan durasi");
+            System.out.println("6. Keluar");
             System.out.print("Pilih menu: ");
             pilihanUtama = input.nextInt();
 
             switch (pilihanUtama) {
                 case 1:
-                    int menuSort;
-                    do {
-                        System.out.println("=== Daftar Semua Lagu ===");
-                        p.tampilkanSemuaLagu();
-                        System.out.println("\n1. Sorting Berdasarkan Durasi");
-                        System.out.println("2. Kembali");
-                        System.out.print("Pilih menu: ");
-
-                        menuSort = input.nextInt();
-
-                        switch (menuSort) {
-                            case 1:
-                                p.urutkanLaguBerdasarkanDurasi();
-                                tekanEnter(input);
-                                break;
-                            case 2:
-                                System.out.println("Kembali ke menu utama...");
-                                delay(1000);
-                                break;
-
-                            default:
-                                System.out.println("Pilihan tidak valid!");
-                                delay(1000);
-                        }
-
-                    } while (menuSort != 2);
+                    System.out.println("=== Daftar Semua Lagu ===");
+                    p.tampilkanSemuaLagu();
+                    tekanEnter(input);
                     break;
 
                 case 2:
@@ -277,6 +255,11 @@ public class PlaylistArray {
                     break;
 
                 case 5:
+                    p.urutkanLaguBerdasarkanDurasi();
+                    tekanEnter(input);
+                    break;
+
+                case 6:
                     System.out.println("Terima kasih!");
                     break;
 
@@ -284,7 +267,7 @@ public class PlaylistArray {
                     System.out.println("Pilihan tidak valid!");
             }
 
-        } while (pilihanUtama != 5);
+        } while (pilihanUtama != 6);
 
         input.close();
     }
