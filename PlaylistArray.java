@@ -54,13 +54,7 @@ class Lagu {
 
     // Method tampilkanInfo()
     public void tampilkanInfo() {
-        int menit = (int) durasi;
-        int detik = (int) Math.round((durasi - menit) * 60);
-
-        System.out.println("INFORMASI LAGU");
-        System.out.printf("Judul       : %-15s%n", judul);
-        System.out.printf("Artis       : %-15s%n", artis);
-        System.out.printf("Durasi      : %02d:%02d%n", menit, detik);
+        System.out.printf("%s - %s (%.2f menit)%n", judul, artis, durasi);
     }
 }
 
@@ -109,10 +103,9 @@ public class PlaylistArray {
         System.out.println("--- Daftar lagu (" + jumlahLagu + " lagu) ---");
         // tampilkan semua lagu
         for (int i = 0; i < jumlahLagu; i++) {
-            System.out.println("[" + (i + 1) + "]");
+            System.out.printf((i + 1) + ". ");
             // tampilkan informasi lagu
             playlist[i].tampilkanInfo();
-            System.out.println();
         }
     }
 
@@ -228,7 +221,6 @@ public class PlaylistArray {
 
             switch (pilihanUtama) {
                 case 1:
-                    System.out.println("=== Daftar Semua Lagu ===");
                     p.tampilkanSemuaLagu();
                     tekanEnter(input);
                     break;
